@@ -1,0 +1,32 @@
+{
+  "name": "dongyu/laravel-container",
+  "description": "laravel container source code read",
+  "authors": [
+    {
+      "name": "dongyu",
+      "email": "dongyuhappy@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "illuminate/contracts": "5.5.*",
+    "psr/container": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0"
+  },
+  "autoload": {
+    "files": [
+    ],
+    "psr-4": {
+      "Illuminate\\": "src/Illuminate/"
+    }
+  },
+  "autoload-dev": {
+    "files": [
+    ],
+    "psr-4": {
+      "Illuminate\\Tests\\": "tests/"
+    }
+  }
+}
