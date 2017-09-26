@@ -268,6 +268,86 @@ $animal = $container->make(Animal::class);// extend 为 true
 
 
 
+## 数组的方式操作容器
+
+`Container` 实现了 `ArrayAccess` 接口，所以可以像使用「Array」 一样操作容器对象。
+
+`ArrayAccess` 定义如下接口
+
+判断指定的`$key`是否存在
+
+```
+   public function offsetExists($key)
+    {
+        return $this->bound($key);
+    }
+
+
+
+```
+
+获取 binding 的对象
+
+```
+
+   public function offsetGet($key)
+    {
+        return $this->make($key);
+    }
+
+```
+
+
+binding 类型到容器
+
+```
+   public function offsetSet($key, $value)
+    {
+        $this->bind($key, $value instanceof Closure ? $value : function () use ($value) {
+            return $value;
+        });
+    }
+
+
+```
+
+
+ 删除容器的 binding 和实例
+ 
+ ```
+     public function offsetUnset($key)
+     {
+         unset($this->bindings[$key], $this->instances[$key], $this->resolved[$key]);
+     }
+ 
+ ```
+
+
+因为我们可以像下面这样使用容器
+
+```
+$container = \Illuminate\Container\Container::getInstance();
+
+if (!isset($container['name'])){// 等同于执行 public function offsetExists($key)
+    $container['name'] = function(){
+        return "This is Messi";
+    };// 等同于执行 public function offsetSet($key, $value) 方法
+}
+
+
+echo $container['name'];// 等同于执行   public function offsetGet($key)
+
+
+```
+
+
+
+
+
+
+
+
+
 ## 如何阅读源码
 
 - 干净的container源码我已经准备好了，直接 clone 下来后执行 `composer install`
